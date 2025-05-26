@@ -171,7 +171,7 @@ const TypingTest = () => {
     <div
       className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `linear-gradient(rgba(30,30,30,0.8), rgba(40,40,40,0.9)), url(/bg.jpg)`,
+        backgroundImage: `linear-gradient(rgba(30,30,30,0.8), rgba(40,40,40,0.9)), url(/bg4.jpg)`,
       }}
     >
       <h1 className="text-4xl font-bold mb-8 drop-shadow-md select-none">
