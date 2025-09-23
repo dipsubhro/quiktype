@@ -39,7 +39,7 @@ const KeyboardDisplay = ({ activeKey }: { activeKey: string | null }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg bg-card border border-border shadow-lg mt-10 max-w-3xl mx-auto select-none">
+    <div className="mt-10 max-w-3xl mx-auto select-none">
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center mb-2">
           {row.map((char) => (
