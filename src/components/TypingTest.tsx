@@ -178,7 +178,7 @@ const TypingTest = () => {
         <span className="text-foreground">Type</span>
       </h1>
 
-      <div className="text-2xl mb-8 p-6 border border-border rounded-lg shadow-lg w-full max-w-3xl bg-card min-h-[120px] select-none">
+      <div className="text-2xl mb-8 w-full max-w-3xl min-h-[120px] select-none">
         {textToType.split("").map((char, index) => (
           <span
             key={index}
