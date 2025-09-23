@@ -12,8 +12,8 @@ const Key = ({
 }) => {
   const size = large ? "w-56" : "w-16";
   const colors = isActive
-    ? "bg-gray-200 text-gray-900 border-gray-300 shadow-md"
-    : "bg-gray-800 text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100";
+    ? "bg-primary text-primary-foreground border-primary shadow-md"
+    : "bg-card text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground";
 
   return (
     <div
@@ -39,7 +39,7 @@ const KeyboardDisplay = ({ activeKey }: { activeKey: string | null }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg bg-gray-900 shadow-lg mt-10 max-w-3xl mx-auto select-none">
+    <div className="p-4 rounded-lg bg-card border border-border shadow-lg mt-10 max-w-3xl mx-auto select-none">
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center mb-2">
           {row.map((char) => (
@@ -156,12 +156,12 @@ const TypingTest = () => {
     isTyped: boolean
   ) => {
     if (!isTyped) {
-      return "text-white opacity-60";
+      return "text-muted-foreground opacity-60";
     }
     if (typedChar === originalChar) {
-      return "text-white font-semibold";
+      return "text-foreground font-semibold";
     }
-    return "text-white font-semibold line-through opacity-70";
+    return "text-destructive font-semibold line-through opacity-70";
   };
 
   const isTestComplete = userInput.length >= textToType.length;
@@ -169,19 +169,16 @@ const TypingTest = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `linear-gradient(rgba(30,30,30,0.8), rgba(40,40,40,0.9)), url(/bg4.jpg)`,
-      }}
+      className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-background"
     >
       <h1 className="text-4xl font-bold mb-8 drop-shadow-md select-none">
-        <kbd className="px-1 py-1 rounded-md bg-gray-700 text-white border border-gray-600 shadow-inner">
+        <kbd className="px-1 py-1 rounded-md bg-muted text-muted-foreground border border-border shadow-inner">
           Quik
         </kbd>
-        <span className="text-white">Type</span>
+        <span className="text-foreground">Type</span>
       </h1>
 
-      <div className="text-2xl mb-8 p-6 border border-gray-600 rounded-lg shadow-lg w-full max-w-3xl bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 min-h-[120px] select-none">
+      <div className="text-2xl mb-8 p-6 border border-border rounded-lg shadow-lg w-full max-w-3xl bg-card min-h-[120px] select-none">
         {textToType.split("").map((char, index) => (
           <span
             key={index}
@@ -201,7 +198,7 @@ const TypingTest = () => {
         type="text"
         value={userInput}
         onChange={handleInputChange}
-        className="w-full max-w-3xl p-4 text-xl rounded-lg border border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-400 shadow-inner focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+        className="w-full max-w-3xl p-4 text-xl rounded-lg border border-border bg-card text-foreground placeholder-muted-foreground shadow-inner focus:outline-none focus:ring-2 focus:ring-primary transition"
         placeholder="Start typing here..."
         aria-label="Typing input"
         disabled={isTestComplete}
@@ -210,14 +207,14 @@ const TypingTest = () => {
       />
 
       {userInput.length > 0 && !isTestComplete && (
-        <div className="mt-6 text-xl text-gray-200 flex space-x-8 font-medium select-none">
+        <div className="mt-6 text-xl text-muted-foreground flex space-x-8 font-medium select-none">
           <span>WPM: {wpm}</span>
           <span>Accuracy: {accuracy}%</span>
         </div>
       )}
 
       {isTestComplete && (
-        <div className="mt-6 text-xl text-gray-200 font-semibold select-none">
+        <div className="mt-6 text-xl text-foreground font-semibold select-none">
           <div>Final WPM: {wpm}</div>
           <div>Accuracy: {accuracy}%</div>
           <div className="mt-2">
@@ -232,9 +229,9 @@ const TypingTest = () => {
         </div>
       )}
 
-      <h1 className="text-2xl font-semibold mt-10 text-gray-100 drop-shadow-md select-none flex items-center justify-center space-x-2">
+      <h1 className="text-2xl font-semibold mt-10 text-muted-foreground drop-shadow-md select-none flex items-center justify-center space-x-2">
         <span>press</span>
-        <kbd className="px-3 py-1 rounded bg-gray-700 text-gray-300 border border-gray-600 shadow-inner font-mono">
+        <kbd className="px-3 py-1 rounded bg-muted text-muted-foreground border border-border shadow-inner font-mono">
           ESC
         </kbd>
         <span>to reset</span>
