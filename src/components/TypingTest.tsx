@@ -156,7 +156,7 @@ const TypingTest = () => {
     isTyped: boolean
   ) => {
     if (!isTyped) {
-      return "text-muted-foreground opacity-60";
+      return "text-foreground";
     }
     if (typedChar === originalChar) {
       return "text-foreground font-semibold";
@@ -219,9 +219,9 @@ const TypingTest = () => {
           <div>Accuracy: {accuracy}%</div>
           <div className="mt-2">
             {isTestCorrect ? (
-              <span className="text-green-400">Excellent! Perfect match!</span>
+              <span className="text-foreground">Excellent! Perfect match!</span>
             ) : (
-              <span className="text-yellow-300">
+              <span className="text-foreground">
                 Good effort, keep practicing!
               </span>
             )}
