@@ -178,7 +178,10 @@ const TypingTest = () => {
         <span className="text-foreground">Type</span>
       </h1>
 
-      <div className="text-2xl mb-8 w-full max-w-3xl min-h-[120px] select-none">
+      <div
+        className="text-4xl mb-8 w-full max-w-3xl min-h-[120px] select-none cursor-text outline-none text-center break-words"
+        onClick={() => inputRef.current?.focus()}
+      >
         {textToType.split("").map((char, index) => (
           <span
             key={index}
@@ -198,7 +201,7 @@ const TypingTest = () => {
         type="text"
         value={userInput}
         onChange={handleInputChange}
-        className="w-full max-w-3xl p-4 text-xl rounded-lg border border-border bg-card text-foreground placeholder-muted-foreground shadow-inner focus:outline-none focus:ring-2 focus:ring-primary transition"
+        className="opacity-0 absolute inset-0 -z-10 h-0 w-0"
         placeholder="Start typing here..."
         aria-label="Typing input"
         disabled={isTestComplete}
@@ -206,7 +209,7 @@ const TypingTest = () => {
         autoComplete="off"
       />
 
-      {userInput.length > 0 && !isTestComplete && (
+      {!isTestComplete && (
         <div className="mt-6 text-xl text-muted-foreground flex space-x-8 font-medium select-none">
           <span>WPM: {wpm}</span>
           <span>Accuracy: {accuracy}%</span>
