@@ -9,10 +9,15 @@ const Key = ({
   char: string;
   large?: boolean;
   isActive: boolean;
+  status?: "correct" | "incorrect" | "neutral";
 }) => {
   const size = large ? "w-56" : "w-16";
   const colors = isActive
-    ? "bg-primary text-primary-foreground border-primary shadow-md"
+    ? status === "correct"
+      ? "bg-green-500 text-white border-green-600 shadow-md"
+      : status === "incorrect"
+        ? "bg-red-500 text-white border-red-600 shadow-md"
+        : "bg-primary text-primary-foreground border-primary shadow-md"
     : "bg-card text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground";
 
   return (
@@ -25,7 +30,13 @@ const Key = ({
   );
 };
 
-const KeyboardDisplay = ({ activeKey }: { activeKey: string | null }) => {
+const KeyboardDisplay = ({
+  activeKey,
+  keyStatus,
+}: {
+  activeKey: string | null;
+  keyStatus: "correct" | "incorrect" | "neutral";
+}) => {
   const rows = [
     ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
@@ -47,12 +58,18 @@ const KeyboardDisplay = ({ activeKey }: { activeKey: string | null }) => {
               key={char}
               char={char}
               isActive={isKeyActive(char, activeKey)}
+              status={isKeyActive(char, activeKey) ? keyStatus : undefined}
             />
           ))}
         </div>
       ))}
       <div className="flex justify-center">
-        <Key char="space" large isActive={isKeyActive("space", activeKey)} />
+        <Key
+          char="space"
+          large
+          isActive={isKeyActive("space", activeKey)}
+          status={isKeyActive("space", activeKey) ? keyStatus : undefined}
+        />
       </div>
     </div>
   );
@@ -159,9 +176,9 @@ const TypingTest = () => {
       return "text-foreground";
     }
     if (typedChar === originalChar) {
-      return "text-foreground font-semibold";
+      return "text-green-500 font-semibold";
     }
-    return "text-destructive font-semibold line-through opacity-70";
+    return "text-red-500 font-semibold line-through opacity-70";
   };
 
   const isTestComplete = userInput.length >= textToType.length;
@@ -240,7 +257,17 @@ const TypingTest = () => {
         <span>to reset</span>
       </h1>
 
-      <KeyboardDisplay activeKey={activeKey} />
+      <KeyboardDisplay
+        activeKey={activeKey}
+        keyStatus={
+          activeKey
+            ? activeKey.toLowerCase() ===
+              textToType[userInput.length]?.toLowerCase()
+              ? "correct"
+              : "incorrect"
+            : "neutral"
+        }
+      />
     </div>
   );
 };
