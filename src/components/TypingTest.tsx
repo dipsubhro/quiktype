@@ -202,12 +202,17 @@ const TypingTest = () => {
         {textToType.split("").map((char, index) => (
           <span
             key={index}
-            className={getCharClassBW(
+            className={`${getCharClassBW(
               char,
               userInput[index],
               index < userInput.length
-            )}
+            )} relative`}
           >
+            {index === userInput.length && !isTestComplete && (
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-muted-foreground whitespace-nowrap font-mono">
+                wpm: {wpm}
+              </div>
+            )}
             {char}
           </span>
         ))}
