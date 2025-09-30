@@ -11,7 +11,7 @@ const Key = ({
   isActive: boolean;
   status?: "correct" | "incorrect" | "neutral";
 }) => {
-  const size = large ? "w-56" : "w-16";
+  const size = large ? "w-80" : "w-20";
   const colors = isActive
     ? status === "correct"
       ? "bg-green-500 text-white border-green-600 shadow-md"
@@ -50,7 +50,7 @@ const KeyboardDisplay = ({
   };
 
   return (
-    <div className="mt-10 max-w-3xl mx-auto select-none">
+    <div className="mt-10 max-w-6xl mx-auto select-none">
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center mb-2">
           {row.map((char) => (
