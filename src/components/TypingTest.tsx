@@ -188,6 +188,24 @@ const TypingTest = () => {
     <div
       className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-background"
     >
+      <div className="absolute top-8 left-8 select-none">
+        <div className="text-xl font-semibold text-muted-foreground drop-shadow-md flex items-center space-x-2">
+          <span>press</span>
+          <kbd className="px-2 py-1 rounded bg-muted text-muted-foreground border border-border shadow-inner font-mono text-sm">
+            ESC
+          </kbd>
+          <span>to reset</span>
+        </div>
+      </div>
+
+      {!isTestComplete && (
+        <div className="absolute top-8 right-8 select-none">
+          <div className="text-xl text-muted-foreground flex space-x-6 font-medium">
+            <span>WPM: {wpm}</span>
+            <span>Accuracy: {accuracy}%</span>
+          </div>
+        </div>
+      )}
       <h1 className="text-4xl font-bold mb-8 drop-shadow-md select-none">
         <kbd className="px-1 py-1 rounded-md bg-muted text-muted-foreground border border-border shadow-inner">
           Quik
@@ -231,12 +249,7 @@ const TypingTest = () => {
         autoComplete="off"
       />
 
-      {!isTestComplete && (
-        <div className="mt-6 text-xl text-muted-foreground flex space-x-8 font-medium select-none">
-          <span>WPM: {wpm}</span>
-          <span>Accuracy: {accuracy}%</span>
-        </div>
-      )}
+
 
       {isTestComplete && (
         <div className="mt-6 text-xl text-foreground font-semibold select-none">
@@ -254,13 +267,7 @@ const TypingTest = () => {
         </div>
       )}
 
-      <h1 className="text-2xl font-semibold mt-10 text-muted-foreground drop-shadow-md select-none flex items-center justify-center space-x-2">
-        <span>press</span>
-        <kbd className="px-3 py-1 rounded bg-muted text-muted-foreground border border-border shadow-inner font-mono">
-          ESC
-        </kbd>
-        <span>to reset</span>
-      </h1>
+
 
       <KeyboardDisplay
         activeKey={activeKey}
