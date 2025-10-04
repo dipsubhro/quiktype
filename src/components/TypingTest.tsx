@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { getRandomText } from "@/lib/textSamples";
+import { useTypingSound } from "@/hooks/useTypingSound";
+import type { SoundType } from "@/hooks/useTypingSound";
+import { Volume2, VolumeX, ChevronDown } from "lucide-react";
 
 const Key = ({
   char,
@@ -84,6 +87,9 @@ const TypingTest = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [wpm, setWpm] = useState<number>(0);
   const [accuracy, setAccuracy] = useState<number>(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { playSound, isMuted, toggleMute, selectedSound, setSelectedSound } = useTypingSound();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -108,8 +114,9 @@ const TypingTest = () => {
     if (key.length === 1 || key === "Spacebar" || key === " ") {
       const effectiveKey = key === "Spacebar" ? " " : key;
       setActiveKey(effectiveKey);
+      playSound();
     }
-  }, []);
+  }, [playSound]);
 
   const handleKeyUp = useCallback(() => {
     setTimeout(() => setActiveKey(null), 150);
@@ -280,6 +287,47 @@ const TypingTest = () => {
             : "neutral"
         }
       />
+
+      <div className="absolute bottom-8 left-8">
+        <div className="relative">
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center space-x-1 px-2 py-2 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
+            title="Sound settings"
+          >
+            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            <ChevronDown size={16} className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute bottom-full left-0 mb-2 w-32 bg-popover text-popover-foreground rounded-md shadow-lg border border-border overflow-hidden z-50">
+              {(['mechanical', 'gaming', 'click'] as SoundType[]).map((sound) => (
+                <button
+                  key={sound}
+                  onClick={() => {
+                    setSelectedSound(sound);
+                    if (isMuted) toggleMute();
+                    setIsDropdownOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${!isMuted && selectedSound === sound ? "bg-accent text-accent-foreground" : ""
+                    }`}
+                >
+                  <span className="capitalize">{sound}</span>
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  if (!isMuted) toggleMute();
+                  setIsDropdownOpen(false);
+                }}
+                className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${isMuted ? "bg-accent text-accent-foreground" : ""
+                  }`}
+              >
+                <span className="capitalize">Mute</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
