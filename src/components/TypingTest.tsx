@@ -232,14 +232,12 @@ const TypingTest = () => {
         </div>
       </div>
 
-      {!isTestComplete && (
-        <div className="absolute top-8 right-8 select-none">
-          <div className="text-xl text-muted-foreground flex space-x-6 font-medium">
-            <span>WPM: {wpm}</span>
-            <span>Accuracy: {accuracy}%</span>
-          </div>
+      <div className="absolute top-8 right-8 select-none">
+        <div className="text-xl text-muted-foreground flex space-x-6 font-medium">
+          <span>WPM: {wpm}</span>
+          <span>Accuracy: {accuracy}%</span>
         </div>
-      )}
+      </div>
       <h1 className="text-4xl font-bold mb-8 drop-shadow-md select-none">
         <kbd className="px-1 py-1 rounded-md bg-muted text-muted-foreground border border-border shadow-inner">
           Quik
@@ -287,8 +285,6 @@ const TypingTest = () => {
 
       {isTestComplete && (
         <div className="mt-6 text-xl text-foreground font-semibold select-none">
-          <div>Final WPM: {wpm}</div>
-          <div>Accuracy: {accuracy}%</div>
           <div className="mt-2">
             {isTestCorrect ? (
               <span className="text-foreground">Excellent! Perfect match!</span>
