@@ -216,7 +216,7 @@ const TypingTest = () => {
   };
 
   const isTestComplete = userInput.length >= textToType.length;
-  const isTestCorrect = userInput === textToType;
+
 
   return (
     <div
@@ -286,13 +286,19 @@ const TypingTest = () => {
       {isTestComplete && (
         <div className="mt-6 text-xl text-foreground font-semibold select-none">
           <div className="mt-2">
-            {isTestCorrect ? (
-              <span className="text-foreground">Excellent! Perfect match!</span>
-            ) : (
-              <span className="text-foreground">
-                Good effort, keep practicing!
-              </span>
-            )}
+            <span className="text-foreground">
+              {(() => {
+                if (accuracy === 100) return "Flawless victory! Perfection.";
+                if (wpm >= 100 && accuracy >= 95) return "Godlike typing! You're unstoppable!";
+                if (wpm >= 80 && accuracy >= 95) return "Lightning fast and precise! Amazing!";
+                if (wpm >= 60 && accuracy >= 90) return "Impressive speed and accuracy! Keep it up!";
+                if (wpm >= 60 && accuracy < 90) return "Fast fingers! Focus a bit more on accuracy.";
+                if (wpm >= 40 && accuracy >= 95) return "Great precision! Try to push your speed a bit.";
+                if (wpm >= 40 && accuracy >= 80) return "Good job! You're getting better.";
+                if (accuracy < 80) return "Accuracy is key. Slow down and focus on precision.";
+                return "Keep practicing! Every keystroke counts.";
+              })()}
+            </span>
           </div>
         </div>
       )}
