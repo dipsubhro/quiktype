@@ -259,7 +259,7 @@ const TypingTest = () => {
             )} relative`}
           >
             {index === userInput.length && !isTestComplete && (
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-muted-foreground whitespace-nowrap font-mono">
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-muted-foreground whitespace-nowrap font-mono z-10 bg-background px-1 rounded">
                 wpm: {wpm}
               </div>
             )}
