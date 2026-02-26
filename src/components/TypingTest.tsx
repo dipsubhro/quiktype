@@ -89,7 +89,8 @@ const TypingTest = () => {
   const [accuracy, setAccuracy] = useState<number>(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { playSound, isMuted, toggleMute, selectedSound, setSelectedSound } = useTypingSound();
+  const { playSound, isMuted, toggleMute, selectedSound, setSelectedSound } =
+    useTypingSound();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -105,45 +106,48 @@ const TypingTest = () => {
     inputRef.current?.focus();
   };
 
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    const key = event.key;
-    if (key === "Escape") {
-      resetTest();
-      return;
-    }
-    if (key === "Tab") {
-      event.preventDefault();
-      const sounds: SoundType[] = ['mechanical', 'gaming', 'click'];
-
-      if (isMuted) {
-        // Currently muted, switch to first sound and unmute
-        toggleMute();
-        setSelectedSound(sounds[0]);
-      } else {
-        const currentIndex = sounds.indexOf(selectedSound);
-        if (currentIndex === sounds.length - 1) {
-          // Last sound, switch to mute
-          toggleMute();
-        } else {
-          // Next sound
-          setSelectedSound(sounds[currentIndex + 1]);
-        }
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const key = event.key;
+      if (key === "Escape") {
+        resetTest();
+        return;
       }
-      setIsDropdownOpen(true);
-      return;
-    }
+      if (key === "Tab") {
+        event.preventDefault();
+        const sounds: SoundType[] = ["mechanical", "gaming", "click"];
 
-    // Close dropdown on any other key press
-    if (isDropdownOpen) {
-      setIsDropdownOpen(false);
-    }
+        if (isMuted) {
+          // Currently muted, switch to first sound and unmute
+          toggleMute();
+          setSelectedSound(sounds[0]);
+        } else {
+          const currentIndex = sounds.indexOf(selectedSound);
+          if (currentIndex === sounds.length - 1) {
+            // Last sound, switch to mute
+            toggleMute();
+          } else {
+            // Next sound
+            setSelectedSound(sounds[currentIndex + 1]);
+          }
+        }
+        setIsDropdownOpen(true);
+        return;
+      }
 
-    if (key.length === 1 || key === "Spacebar" || key === " ") {
-      const effectiveKey = key === "Spacebar" ? " " : key;
-      setActiveKey(effectiveKey);
-      playSound();
-    }
-  }, [playSound, selectedSound, setSelectedSound]);
+      // Close dropdown on any other key press
+      if (isDropdownOpen) {
+        setIsDropdownOpen(false);
+      }
+
+      if (key.length === 1 || key === "Spacebar" || key === " ") {
+        const effectiveKey = key === "Spacebar" ? " " : key;
+        setActiveKey(effectiveKey);
+        playSound();
+      }
+    },
+    [playSound, selectedSound, setSelectedSound],
+  );
 
   const handleKeyUp = useCallback(() => {
     setTimeout(() => setActiveKey(null), 150);
@@ -192,7 +196,7 @@ const TypingTest = () => {
       if (elapsedTimeInSeconds > 0) {
         const correctWordsTyped = correctChars / 5;
         const currentWpm = Math.round(
-          (correctWordsTyped / elapsedTimeInSeconds) * 60
+          (correctWordsTyped / elapsedTimeInSeconds) * 60,
         );
         setWpm(currentWpm);
       } else {
@@ -204,7 +208,7 @@ const TypingTest = () => {
   const getCharClassBW = (
     originalChar: string,
     typedChar: string | undefined,
-    isTyped: boolean
+    isTyped: boolean,
   ) => {
     if (!isTyped) {
       return "text-foreground";
@@ -217,11 +221,8 @@ const TypingTest = () => {
 
   const isTestComplete = userInput.length >= textToType.length;
 
-
   return (
-    <div
-      className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-background"
-    >
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 relative bg-transparent">
       <div className="absolute top-8 left-8 select-none">
         <div className="text-xl font-semibold text-muted-foreground drop-shadow-md flex items-center space-x-2">
           <span>press</span>
@@ -255,7 +256,7 @@ const TypingTest = () => {
             className={`${getCharClassBW(
               char,
               userInput[index],
-              index < userInput.length
+              index < userInput.length,
             )} relative`}
           >
             {index === userInput.length && !isTestComplete && (
@@ -281,29 +282,32 @@ const TypingTest = () => {
         autoComplete="off"
       />
 
-
-
       {isTestComplete && (
         <div className="mt-6 text-xl text-foreground font-semibold select-none">
           <div className="mt-2">
             <span className="text-foreground">
               {(() => {
                 if (accuracy === 100) return "Flawless victory! Perfection.";
-                if (wpm >= 100 && accuracy >= 95) return "Godlike typing! You're unstoppable!";
-                if (wpm >= 80 && accuracy >= 95) return "Lightning fast and precise! Amazing!";
-                if (wpm >= 60 && accuracy >= 90) return "Impressive speed and accuracy! Keep it up!";
-                if (wpm >= 60 && accuracy < 90) return "Fast fingers! Focus a bit more on accuracy.";
-                if (wpm >= 40 && accuracy >= 95) return "Great precision! Try to push your speed a bit.";
-                if (wpm >= 40 && accuracy >= 80) return "Good job! You're getting better.";
-                if (accuracy < 80) return "Accuracy is key. Slow down and focus on precision.";
+                if (wpm >= 100 && accuracy >= 95)
+                  return "Godlike typing! You're unstoppable!";
+                if (wpm >= 80 && accuracy >= 95)
+                  return "Lightning fast and precise! Amazing!";
+                if (wpm >= 60 && accuracy >= 90)
+                  return "Impressive speed and accuracy! Keep it up!";
+                if (wpm >= 60 && accuracy < 90)
+                  return "Fast fingers! Focus a bit more on accuracy.";
+                if (wpm >= 40 && accuracy >= 95)
+                  return "Great precision! Try to push your speed a bit.";
+                if (wpm >= 40 && accuracy >= 80)
+                  return "Good job! You're getting better.";
+                if (accuracy < 80)
+                  return "Accuracy is key. Slow down and focus on precision.";
                 return "Keep practicing! Every keystroke counts.";
               })()}
             </span>
           </div>
         </div>
       )}
-
-
 
       <KeyboardDisplay
         activeKey={activeKey}
@@ -334,27 +338,33 @@ const TypingTest = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute bottom-full left-0 mb-2 w-32 bg-popover text-popover-foreground rounded-md shadow-lg border border-border overflow-hidden z-50">
-                {(['mechanical', 'gaming', 'click'] as SoundType[]).map((sound) => (
-                  <button
-                    key={sound}
-                    onClick={() => {
-                      setSelectedSound(sound);
-                      if (isMuted) toggleMute();
-                      setIsDropdownOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${!isMuted && selectedSound === sound ? "bg-accent text-accent-foreground" : ""
+                {(["mechanical", "gaming", "click"] as SoundType[]).map(
+                  (sound) => (
+                    <button
+                      key={sound}
+                      onClick={() => {
+                        setSelectedSound(sound);
+                        if (isMuted) toggleMute();
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${
+                        !isMuted && selectedSound === sound
+                          ? "bg-accent text-accent-foreground"
+                          : ""
                       }`}
-                  >
-                    <span className="capitalize">{sound}</span>
-                  </button>
-                ))}
+                    >
+                      <span className="capitalize">{sound}</span>
+                    </button>
+                  ),
+                )}
                 <button
                   onClick={() => {
                     if (!isMuted) toggleMute();
                     setIsDropdownOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${isMuted ? "bg-accent text-accent-foreground" : ""
-                    }`}
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors ${
+                    isMuted ? "bg-accent text-accent-foreground" : ""
+                  }`}
                 >
                   <span className="capitalize">Mute</span>
                 </button>

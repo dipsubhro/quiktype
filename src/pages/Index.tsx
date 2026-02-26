@@ -1,16 +1,12 @@
 import TypingTest from "@/components/TypingTest";
-// import KeyboardDisplay from "../components/KeyboardDisplay";
+import { Vortex } from "@/components/ui/vortex";
 
 export default function Index() {
-    return (
-        <div className="bg-background text-foreground">
-            <TypingTest />
-            {/* <KeyboardDisplay activeKey={null} />
-            <h1 className="text-4xl font-bold text-blue-700">
-                Tailwind is working!
-            </h1> */}
-        </div>
-    );
+  return (
+    <div className="h-screen w-full overflow-hidden bg-background text-foreground">
+      <Vortex backgroundColor="black" className="h-full w-full">
+        <TypingTest />
+      </Vortex>
+    </div>
+  );
 }
-
-// export default Index;
